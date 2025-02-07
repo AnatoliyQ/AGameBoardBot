@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/board_games_db}
+    username: ${SPRING_DATASOURCE_USERNAME:boardgames}
+    password: ${SPRING_DATASOURCE_PASSWORD:boardgames}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  sql:
+    init:
+      mode: always
+      platform: postgresql
+      schema-locations: classpath:db/migration/schema.sql
+      data-locations: classpath:db/migration/data.sql
+
+telegram:
+  webhook-path: ${TELEGRAM_WEBHOOK_PATH:https://your-domain.com}
+  bot-username: ${TELEGRAM_BOT_USERNAME:avo_game_board_bot}
+  bot-token: ${TELEGRAM_BOT_TOKEN:your-token-here}
+  bot-path: /callback/webhook
+
+server:
+  port: ${SERVER_PORT:8080}
+  forward-headers-strategy: framework

@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/board_games_db
+    username: boardgames
+    password: boardgames
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
+telegram:
+  webhook-path: ${WEBHOOK_URL}
+  bot-username: ${BOT_USERNAME}
+  bot-token: ${BOT_TOKEN}
+  bot-path: /callback/webhook
+  webapp-url: ${WEBAPP_URL}
+
+logging:
+  level:
+    root: INFO
+    com.sennikov.avoboardgame: DEBUG
+    org.springframework.web: DEBUG
+
+server:
+  port: 8080
+  forward-headers-strategy: native
