@@ -4,8 +4,12 @@ RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci --only=production
 COPY . .
-RUN npm install -g @vue/cli @vue/cli-service
 RUN npm run build
-RUN ls -la dist/ 
+RUN ls -la dist/
+
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"] 
