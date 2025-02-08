@@ -4,10 +4,12 @@ services:
       context: ./src/frontend/game-board-frontend
       dockerfile: Dockerfile
     container_name: board-games-frontend
+    ports:
+      - "80:80"
     volumes:
       - frontend_build:/usr/share/nginx/html
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:80"]
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost"]
       interval: 30s
       timeout: 10s
       retries: 3
