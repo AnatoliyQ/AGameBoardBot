@@ -5,15 +5,17 @@ WORKDIR /app
 
 # Копируем только необходимые файлы
 COPY package*.json ./
-COPY vite.config.js ./
-COPY src src/
-COPY public public/
 
-# Устанавливаем только production зависимости
-RUN npm ci --only=production && \
-    npm install -D vite@4.5.1 @vitejs/plugin-vue@4.5.2 && \
-    npm run build && \
-    rm -rf node_modules
+# Сначала удаляем package-lock.json и устанавливаем зависимости заново
+RUN rm -f package-lock.json && \
+    npm install && \
+    npm install -D vite@4.5.1 @vitejs/plugin-vue@4.5.2
+
+# Копируем исходники
+COPY . .
+
+# Собираем приложение
+RUN npm run build
 
 # Этап production
 FROM nginx:alpine
