@@ -1,6 +1,9 @@
 FROM eclipse-temurin:17-jdk as build
 WORKDIR /app
 
+# Устанавливаем curl до других операций
+RUN microdnf install -y curl && microdnf clean all
+
 # Создаем базовую структуру Gradle проекта
 COPY build.gradle settings.gradle ./
 COPY src src/
