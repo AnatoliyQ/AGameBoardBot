@@ -24,16 +24,13 @@ RUN curl -L -o gradlew https://raw.githubusercontent.com/gradle/gradle/v8.5.0/gr
     curl -L -o gradlew.bat https://raw.githubusercontent.com/gradle/gradle/v8.5.0/gradlew.bat && \
     chmod +x gradlew
 
-# Устанавливаем curl для скачивания файлов
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
-
 # Загружаем зависимости
 RUN ./gradlew dependencies --no-daemon
 
 # Собираем приложение
 RUN ./gradlew bootJar --no-daemon
 
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]

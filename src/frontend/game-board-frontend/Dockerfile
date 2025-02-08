@@ -4,9 +4,11 @@ RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
-RUN npm install -g vite
+RUN npm cache clean --force && \
+    npm ci && \
+    npm install -g vite@4.5.1
 COPY . .
+RUN npm list
 RUN npm run build
 RUN ls -la dist/
 
