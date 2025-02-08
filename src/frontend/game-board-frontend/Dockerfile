@@ -3,19 +3,31 @@ FROM node:18-alpine as build
 
 WORKDIR /app
 
-# Копируем только необходимые файлы
+# Устанавливаем переменные окружения для npm
+ENV NODE_ENV=development
+ENV NPM_CONFIG_LOGLEVEL=info
+ENV NPM_CONFIG_CACHE=/tmp/.npm
+
+# Копируем файлы для установки зависимостей
 COPY package*.json ./
 
-# Сначала удаляем package-lock.json и устанавливаем зависимости заново
-RUN rm -f package-lock.json && \
-    npm install && \
-    npm install -D vite@4.5.1 @vitejs/plugin-vue@4.5.2
+# Устанавливаем зависимости
+RUN npm install
 
-# Копируем исходники
+# Копируем исходники и конфигурационные файлы
 COPY . .
 
-# Собираем приложение
-RUN npm run build
+# Проверяем окружение и файлы
+RUN ls -la && \
+    echo "Node version:" && node -v && \
+    echo "NPM version:" && npm -v && \
+    echo "Vite config:" && cat vite.config.js && \
+    echo "Node modules:" && ls -la node_modules/@vitejs && \
+    echo "Package.json:" && cat package.json && \
+    echo "Bin directory:" && ls -la node_modules/.bin
+
+# Собираем приложение используя полный путь
+RUN ./node_modules/.bin/vite build
 
 # Этап production
 FROM nginx:alpine
