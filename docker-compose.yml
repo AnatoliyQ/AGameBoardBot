@@ -12,7 +12,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=boardgames
       - SPRING_PROFILES_ACTIVE=prod
       - TELEGRAM_WEBHOOK_PATH=https://aboardgamebot.ru
-      - TELEGRAM_BOT_USERNAME=your_bot_username
+      - TELEGRAM_BOT_USERNAME=avo_game_board_bot
       - TELEGRAM_BOT_TOKEN=your_bot_token
       - TELEGRAM_WEBAPP_URL=https://aboardgamebot.ru
     depends_on:
