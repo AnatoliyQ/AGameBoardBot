@@ -1,45 +1,23 @@
-services:
-  frontend:
-    build:
-      context: ./src/frontend/game-board-frontend
-      dockerfile: Dockerfile
-    container_name: board-games-frontend
-    ports:
-      - "80:80"
-    volumes:
-      - frontend_build:/usr/share/nginx/html
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+version: '3.8'
 
+services:
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: board-games-backend
     ports:
-      - "8081:8080"
+      - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/board_games_db
-      SPRING_DATASOURCE_USERNAME: boardgames
-      SPRING_DATASOURCE_PASSWORD: boardgames
-      TELEGRAM_WEBHOOK_PATH: ${TELEGRAM_WEBHOOK_PATH}
-      TELEGRAM_BOT_USERNAME: ${TELEGRAM_BOT_USERNAME}
-      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
-      SPRING_PROFILES_ACTIVE: prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/board_games_db
+      - SPRING_DATASOURCE_USERNAME=boardgames
+      - SPRING_DATASOURCE_PASSWORD=boardgames
+      - SPRING_PROFILES_ACTIVE=prod
+      - TELEGRAM_WEBHOOK_PATH=${TELEGRAM_WEBHOOK_PATH}
+      - TELEGRAM_BOT_USERNAME=${TELEGRAM_BOT_USERNAME}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - frontend_build:/app/src/main/resources/static
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
+    restart: unless-stopped
 
   postgres:
     image: postgres:15-alpine
@@ -48,8 +26,6 @@ services:
       POSTGRES_DB: board_games_db
       POSTGRES_USER: boardgames
       POSTGRES_PASSWORD: boardgames
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -57,18 +33,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: board-games-pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
-    depends_on:
-      - postgres
+    restart: unless-stopped
 
 volumes:
   postgres_data:
-  frontend_build:
