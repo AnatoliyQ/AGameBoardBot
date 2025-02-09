@@ -14,7 +14,7 @@ services:
       - TELEGRAM_WEBHOOK_PATH=https://aboardgamebot.ru
       - TELEGRAM_BOT_USERNAME=your_bot_username
       - TELEGRAM_BOT_TOKEN=your_bot_token
-      - WEBAPP_URL=https://aboardgamebot.ru
+      - TELEGRAM_WEBAPP_URL=https://aboardgamebot.ru
     depends_on:
       postgres:
         condition: service_healthy
