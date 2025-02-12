@@ -22,13 +22,15 @@ spring:
       data-locations: classpath:db/migration/data.sql
 
 telegram:
-  webhook-path: ${TELEGRAM_WEBHOOK_PATH:https://your-domain.com}
+  webhook-path: ${TELEGRAM_WEBHOOK_PATH:https://agameboardbot.site}
   bot-username: ${TELEGRAM_BOT_USERNAME:avo_game_board_bot}
   bot-token: ${TELEGRAM_BOT_TOKEN:your-token-here}
   bot-path: /callback/webhook
+  webapp-url: ${TELEGRAM_WEBAPP_URL:https://agameboardbot.site}
 
 server:
-  port: ${SERVER_PORT:8080}
+  port: 8080
+  address: 0.0.0.0
   forward-headers-strategy: framework
 
 management:
