@@ -9,11 +9,14 @@ services:
       - "443:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ~/nginx/ssl:/etc/ssl/certs
+      - /root/nginx/ssl:/etc/ssl/certs
       - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./src/frontend/game-board-frontend/dist:/usr/share/nginx/html
     depends_on:
       - backend
     restart: unless-stopped
+    networks:
+      - app-network
 
   backend:
     build: .
@@ -33,6 +36,8 @@ services:
       postgres:
         condition: service_healthy
     restart: unless-stopped
+    networks:
+      - app-network
 
   postgres:
     image: postgres:15-alpine
@@ -52,3 +57,7 @@ services:
 
 volumes:
   postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
