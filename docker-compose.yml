@@ -1,20 +1,34 @@
 version: '3.8'
 
 services:
+  nginx:
+    image: nginx:alpine
+    container_name: board-games-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/ssl/certs
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+
   backend:
     build: .
     container_name: board-games-backend
-    ports:
-      - "8080:8080"
+    expose:
+      - "8080"  # Только для внутренней сети
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/board_games_db
       - SPRING_DATASOURCE_USERNAME=boardgames
       - SPRING_DATASOURCE_PASSWORD=boardgames
       - SPRING_PROFILES_ACTIVE=prod
-      - TELEGRAM_WEBHOOK_PATH=https://aboardgamebot.ru
+      - TELEGRAM_WEBHOOK_PATH=https://agameboardbot.site
       - TELEGRAM_BOT_USERNAME=avo_game_board_bot
       - TELEGRAM_BOT_TOKEN=your_bot_token
-      - TELEGRAM_WEBAPP_URL=https://aboardgamebot.ru
+      - TELEGRAM_WEBAPP_URL=https://agameboardbot.site
     depends_on:
       postgres:
         condition: service_healthy
