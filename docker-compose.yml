@@ -9,7 +9,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/ssl:/etc/ssl/certs
+      - ~/nginx/ssl:/etc/ssl/certs
       - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - backend
