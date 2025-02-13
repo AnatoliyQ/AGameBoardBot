@@ -16,11 +16,7 @@ spring:
     show-sql: ${SPRING_SHOW_SQL:true}
   sql:
     init:
-      encoding: UTF-8
-      mode: always
-      platform: postgresql
-      schema-locations: classpath:db/migration/1schema.sql
-      data-locations: classpath:db/migration/2data.sql
+      mode: never
 
 telegram:
   webhook-path: ${TELEGRAM_WEBHOOK_PATH:https://agameboardbot.site}
