@@ -43,7 +43,7 @@ services:
       postgres:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      test: curl --fail http://localhost:8080/actuator/health || exit 1
       interval: 30s
       timeout: 10s
       retries: 5
@@ -71,6 +71,12 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./src/main/resources/db/migration:/docker-entrypoint-initdb.d
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=100"
+      - "-c"
+      - "shared_buffers=128MB"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U boardgames -d board_games_db"]
       interval: 20s
