@@ -6,6 +6,16 @@ DROP TYPE IF EXISTS GAME_TYPE;
 
 DO LANGUAGE plpgsql 'BEGIN CREATE TYPE GAME_TYPE AS ENUM (''PVP'', ''PVE''); EXCEPTION WHEN duplicate_object THEN NULL; END;';
 
+-- Сначала создаем app_users
+CREATE TABLE IF NOT EXISTS app_users (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    telegram_username VARCHAR(100) UNIQUE NOT NULL,
+    is_employee BOOLEAN DEFAULT true
+);
+
+-- Потом board_games с внешним ключом на app_users
 CREATE TABLE IF NOT EXISTS board_games (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
@@ -16,14 +26,7 @@ CREATE TABLE IF NOT EXISTS board_games (
     description TEXT
 );
 
-CREATE TABLE IF NOT EXISTS app_users (
-    id SERIAL PRIMARY KEY,
-    first_name VARCHAR(100) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    telegram_username VARCHAR(100) UNIQUE NOT NULL,
-    is_employee BOOLEAN DEFAULT true
-);
-
+-- Остальные таблицы
 CREATE TABLE IF NOT EXISTS game_sessions (
     id SERIAL PRIMARY KEY,
     game_id BIGINT NOT NULL REFERENCES board_games(id) DEFERRABLE INITIALLY DEFERRED,
