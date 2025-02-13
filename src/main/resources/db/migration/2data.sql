@@ -1,5 +1,6 @@
 BEGIN;
 
+-- 1. Добавляем пользователей и проверяем
 INSERT INTO app_users (first_name, last_name, telegram_username, is_employee)
 VALUES
     ('Анатолий', 'Сенников', 'AnatolSn', true),
@@ -17,8 +18,10 @@ VALUES
     ('Дмитрий', 'Степанов', 'LarsAlsir', true),
     ('Юлия', 'Виноградова', 'yulka_ka', false),
     ('Мария', 'Борисик', 'MaryOnAir90', true),
-    ('Олег', 'Стрельников', 'Strelnikoff', false);
+    ('Олег', 'Стрельников', 'Strelnikoff', false)
+RETURNING telegram_username;
 
+-- 2. Добавляем игры и проверяем
 WITH inserted_games AS (
     INSERT INTO board_games (name, type, players, owner, image_url, description)
     VALUES
@@ -46,21 +49,29 @@ WITH inserted_games AS (
         ('Цитадели Делюкс', 'PVP', '2-8', 'LarsAlsir', 'https://hobbygames.ru/image/cache/hobbygames_beta/data/HobbyWorld/Citadeli/Citadeli_Deluxe/Citadeli_Delyuks00-1024x1024-wm.jpg', '"Цитадели" – это всемирно известная настольная игра Бруно Файдутти.')
     RETURNING id, name
 )
-INSERT INTO game_sessions (id, game_id, play_date)
-SELECT 
-    s.session_id,
-    g.id,
-    s.play_date
-FROM (
-    VALUES 
-        (1, 'Бэнг! Меч самурая', '2025-02-05'),
-        (2, 'Бэнг! Меч самурая', '2025-02-05'),
-        (3, 'Судный день', '2025-02-08'),
-        (4, 'Судный день', '2025-02-08'),
-        (5, 'Цитадели Делюкс', '2025-02-08')
-) as s(session_id, game_name, play_date)
-JOIN inserted_games g ON g.name = s.game_name;
+SELECT id, name FROM inserted_games;
 
+-- 3. Добавляем сессии и проверяем
+WITH inserted_sessions AS (
+    INSERT INTO game_sessions (id, game_id, play_date)
+    SELECT 
+        s.session_id,
+        g.id,
+        s.play_date
+    FROM (
+        VALUES 
+            (1, 'Бэнг! Меч самурая', '2025-02-05'),
+            (2, 'Бэнг! Меч самурая', '2025-02-05'),
+            (3, 'Судный день', '2025-02-08'),
+            (4, 'Судный день', '2025-02-08'),
+            (5, 'Цитадели Делюкс', '2025-02-08')
+    ) as s(session_id, game_name, play_date)
+    JOIN inserted_games g ON g.name = s.game_name
+    RETURNING id, game_id
+)
+SELECT * FROM inserted_sessions;
+
+-- 4. Добавляем игроков и проверяем
 INSERT INTO game_session_players (session_id, player_username, is_winner)
 VALUES
     (1, 'AnatolSn', false),
@@ -96,7 +107,8 @@ VALUES
     (5, 'LarsAlsir', false),
     (5, 'yulka_ka', false),
     (5, 'i_am_super', false),
-    (5, 'MaryOnAir90', false);
+    (5, 'MaryOnAir90', false)
+RETURNING session_id, player_username;
 
 -- Обновляем последовательность
 SELECT setval('game_sessions_id_seq', (SELECT MAX(id) FROM game_sessions));
