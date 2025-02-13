@@ -103,4 +103,4 @@ INSERT INTO game_session_players (session_id, player_username, is_winner) VALUES
     (7, 'DDI_C', false),
     (7, 'riv1sky', false),
     (7, 'nata_dubl_bubl', false),
-    (7, 'romcheg06', true),
+    (7, 'romcheg06', true);
