@@ -41,3 +41,52 @@ INSERT INTO board_games (name, type, players, owner, image_url, description) VAL
     ('Мемы', 'PVE', '3-12', 'riv1sky', 'https://hobbygames.ru/image/cache/hobbygames_beta/data/Ekonomikuc/Mems/memy-1024x1024-wm.JPG', 'Интернет-мемы уже давно стали неотъемлемой частью нашей жизни. Чаще всего они принимают форму смешных изображений, с которыми вы неоднократно сталкивались, прокручивая ленту или общаясь в мессенджере. В зависимости от контекста одно и то же изображение может заиграть новыми красками – так почему бы не проверить, кто из ваших друзей самый находчивый и остроумный? Правила игры "Мемы: Весело и в точку!" настолько просты, что объяснены прямо на коробке! В начале раунда ведущий зачитывает одну ситуацию – она может быть смешной, злободневной, неловкой или какой-либо ещё. Следом каждый игрок должен выложить из руки по одной карте мема, который, согласно его мнению, подходит для озвученной ситуации. Когда игроки закончат, ведущий выбирает лучший мем, а его автор получает часть оставшихся карточек в качестве трофеев. Тот, у кого стопка трофеев в конце игры окажется наиболее внушительной, получает почётное звание главного мемолога вашей тусовки!'),
     ('Взрывные котята (18+)', 'PVE', '2-5', 'riv1sky', 'https://hobbygames.ru/image/cache/hobbygames_beta/data/HobbyWorld/Explosive_Kitten/18/Kotyata18_00-1024x1024-wm.jpg', '"Взрывные котята" – это нашумевший карточный хит, который влюбил в себя огромное количество игроков по всему миру.'),
     ('Цитадели Делюкс', 'PVP', '2-8', 'LarsAlsir', 'https://hobbygames.ru/image/cache/hobbygames_beta/data/HobbyWorld/Citadeli/Citadeli_Deluxe/Citadeli_Delyuks00-1024x1024-wm.jpg', '"Цитадели" – это всемирно известная настольная игра Бруно Файдутти.');
+
+-- История игровых сессий
+INSERT INTO game_sessions (game_id, play_date) VALUES
+    (19, '2025-02-05'), -- Бэнг! Меч самурая
+    (19, '2025-02-05'), -- Бэнг! Меч самурая
+    -- Дюна (id: 5)
+    (1, '2025-02-08'), -- Судный день
+    (1, '2025-02-08'), -- Судный день
+    (22, '2025-02-08'); -- Цитадели Делюкс
+
+
+
+
+-- Результаты игр
+INSERT INTO game_session_players (session_id, player_username, is_winner) VALUES
+    (1, 'AnatolSn', false),
+    (1, 'DDI_C', false),
+    (1, 'i_am_super', true),
+    (1, 'romcheg06', false),
+    (1, 'riv1sky', false),
+    (1, 'nata_dubl_bubl', true),
+    (1, 'mrDmitryVinogradov', false),
+    (2, 'AnatolSn', false),
+    (2, 'DDI_C', false),
+    (2, 'i_am_super', true),
+    (2, 'romcheg06', false),
+    (2, 'riv1sky', true),
+    (2, 'nata_dubl_bubl', true),
+    (3, 'AnatolSn', false),
+    (3, 'romcheg06', false),
+    (3, 'LarsAlsir', true),
+    (3, 'mrDmitryVinogradov', true),
+    (3, 'yulka_ka', true),
+    (3, 'i_am_super', true),
+    (3, 'MaryOnAir90', true),
+    (4, 'AnatolSn', false),
+    (4, 'romcheg06', true),
+    (4, 'LarsAlsir', true),
+    (4, 'mrDmitryVinogradov', true),
+    (4, 'yulka_ka', true),
+    (4, 'i_am_super', false),
+    (4, 'MaryOnAir90', true),
+    (5, 'romcheg06', true),
+    (5, 'AnatolSn', false),
+    (5, 'mrDmitryVinogradov', false),
+    (5, 'LarsAlsir', false),
+    (5, 'yulka_ka', false),
+    (5, 'i_am_super', false),
+    (5, 'MaryOnAir90', false);
