@@ -18,8 +18,8 @@ spring:
     init:
       mode: always
       platform: postgresql
-      schema-locations: classpath:db/migration/V1__schema.sql
-      data-locations: classpath:db/migration/V2__data.sql
+      schema-locations: classpath:db/migration/1schema.sql
+      data-locations: classpath:db/migration/2data.sql
 
 telegram:
   webhook-path: ${TELEGRAM_WEBHOOK_PATH:https://agameboardbot.site}

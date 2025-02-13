@@ -38,7 +38,7 @@ VALUES
     ('Дмитрий', 'Виноградов', 'mrDmitryVinogradov', true),
     ('Дмитрий', 'Степанов', 'LarsAlsir', true),
     ('Наталья', 'Перминова', 'nata_dubl_bubl', true),
-    ('Юлия', 'Виноградова', 'JuliaVinogradova', false),
+    ('Юлия', 'Виноградова', 'yulka_ka', false),
     ('Мария', 'Борисик', 'MaryOnAir90', true),
     ('Олег', 'Стрельников', 'Strelnikoff', false);
 
