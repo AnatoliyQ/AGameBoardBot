@@ -46,7 +46,6 @@ INSERT INTO game_sessions (id, game_id, play_date)
 VALUES
     (1, 19, '2025-02-05'),
     (2, 19, '2025-02-05');
---    (3, )
 
 INSERT INTO game_session_players (session_id, player_username, is_winner)
 VALUES
