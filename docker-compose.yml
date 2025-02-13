@@ -69,14 +69,13 @@ services:
       LANG: ru_RU.utf8
       LC_ALL: ru_RU.utf8
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./src/main/resources/db/migration:/docker-entrypoint-initdb.d
-    command:
-      - "postgres"
-      - "-c"
-      - "max_connections=100"
-      - "-c"
-      - "shared_buffers=128MB"
+      - type: volume
+        source: postgres_data
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: ./src/main/resources/db/migration
+        target: /docker-entrypoint-initdb.d
+    command: ["postgres", "-c", "max_connections=100", "-c", "shared_buffers=128MB"]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U boardgames -d board_games_db"]
       interval: 20s
@@ -94,7 +93,9 @@ services:
 
 volumes:
   postgres_data:
+    driver: local
   nginx_cache:
+    driver: local
 
 networks:
   app-network:
