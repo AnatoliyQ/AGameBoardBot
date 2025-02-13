@@ -42,6 +42,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+        timeout: 60s
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
       interval: 30s
@@ -75,7 +76,8 @@ services:
       test: ["CMD-SHELL", "pg_isready -U boardgames -d board_games_db"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 30s
     restart: unless-stopped
     networks:
       - app-network
