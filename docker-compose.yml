@@ -66,6 +66,8 @@ services:
       POSTGRES_DB: board_games_db
       POSTGRES_USER: boardgames
       POSTGRES_PASSWORD: boardgames
+      LANG: ru_RU.utf8
+      LC_ALL: ru_RU.utf8
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./src/main/resources/db/migration:/docker-entrypoint-initdb.d
