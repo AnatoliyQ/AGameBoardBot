@@ -46,10 +46,11 @@ INSERT INTO board_games (name, type, players, owner, image_url, description) VAL
 INSERT INTO game_sessions (game_id, play_date) VALUES
     (19, '2025-02-05'), -- Бэнг! Меч самурая
     (19, '2025-02-05'), -- Бэнг! Меч самурая
-    -- Дюна (id: 5)
     (1, '2025-02-08'), -- Судный день
     (1, '2025-02-08'), -- Судный день
-    (22, '2025-02-08'); -- Цитадели Делюкс
+    (22, '2025-02-08'), -- Цитадели Делюкс
+    (19, '2025-02-13'), -- Бэнг! Меч самурая
+    (19, '2025-02-13'); -- Бэнг! Меч самурая
 
 
 
@@ -89,4 +90,17 @@ INSERT INTO game_session_players (session_id, player_username, is_winner) VALUES
     (5, 'LarsAlsir', false),
     (5, 'yulka_ka', false),
     (5, 'i_am_super', false),
-    (5, 'MaryOnAir90', false);
+    (5, 'MaryOnAir90', false),
+    -- //
+    (6, 'i_am_super', false),
+    (6, 'AnatolSn', true),
+    (6, 'DDI_C', true),
+    (6, 'riv1sky', false),
+    (6, 'nata_dubl_bubl', false),
+    -- //
+    (7, 'i_am_super', true),
+    (7, 'AnatolSn', true),
+    (7, 'DDI_C', false),
+    (7, 'riv1sky', false),
+    (7, 'nata_dubl_bubl', false),
+    (7, 'romcheg06', true),
