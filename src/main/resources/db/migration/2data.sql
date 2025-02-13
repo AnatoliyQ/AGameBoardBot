@@ -36,7 +36,6 @@ VALUES
     ('Шахзод', 'Алибоев', 'DDI_C', true),
     ('Фарход', 'Данияров', 'farkhod89', true),
     ('Дмитрий', 'Виноградов', 'mrDmitryVinogradov', true),
-    ('Дерьмо', 'Недобавилось', 'someshit', true),
     ('Дмитрий', 'Степанов', 'LarsAlsir', true),
     ('Наталья', 'Перминова', 'nata_dubl_bubl', true),
     ('Юлия', 'Виноградова', 'yulka_ka', false),
