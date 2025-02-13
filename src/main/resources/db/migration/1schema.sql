@@ -31,13 +31,11 @@ CREATE TABLE IF NOT EXISTS game_sessions (
     FOREIGN KEY (game_id) REFERENCES board_games(id)
 );
 
-CREATE TABLE IF NOT EXISTS game_session_players (
-    session_id BIGINT,
-    player_username VARCHAR(100),
-    is_winner BOOLEAN,
-    PRIMARY KEY (session_id, player_username),
-    FOREIGN KEY (session_id) REFERENCES game_sessions(id),
-    FOREIGN KEY (player_username) REFERENCES app_users(telegram_username)
+CREATE TABLE game_session_players (
+    session_id INTEGER REFERENCES game_sessions(id),
+    player_username VARCHAR(32) REFERENCES app_users(telegram_username) DEFERRABLE INITIALLY DEFERRED,
+    is_winner BOOLEAN NOT NULL,
+    PRIMARY KEY (session_id, player_username)
 );
 
 -- Добавим индексы для оптимизации запросов

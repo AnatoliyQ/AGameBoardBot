@@ -45,7 +45,10 @@ VALUES
 INSERT INTO game_sessions (id, game_id, play_date)
 VALUES
     (1, 19, '2025-02-05'),
-    (2, 19, '2025-02-05');
+    (2, 19, '2025-02-05'),
+    (3, 1, '2025-02-08'),
+    (4, 1, '2025-02-08'),
+    (5, 22, '2025-02-08');
 
 INSERT INTO game_session_players (session_id, player_username, is_winner)
 VALUES
@@ -61,7 +64,28 @@ VALUES
     (2, 'i_am_super', true),
     (2, 'romcheg06', false),
     (2, 'riv1sky', true),
-    (2, 'nata_dubl_bubl', true);
+    (2, 'nata_dubl_bubl', true),
+    (3, 'AnatolSn', false),
+    (3, 'romcheg06', false),
+    (3, 'LarsAlsir', true),
+    (3, 'mrDmitryVinogradov', true),
+    (3, 'yulka_ka', true),
+    (3, 'i_am_super', true),
+    (3, 'MaryOnAir90', true),
+    (4, 'AnatolSn', false),
+    (4, 'romcheg06', true),
+    (4, 'LarsAlsir', true),
+    (4, 'mrDmitryVinogradov', true),
+    (4, 'yulka_ka', true),
+    (4, 'i_am_super', false),
+    (4, 'MaryOnAir90', true),
+    (5, 'romcheg06', true),
+    (5, 'AnatolSn', false),
+    (5, 'mrDmitryVinogradov', false),
+    (5, 'LarsAlsir', false),
+    (5, 'yulka_ka', false),
+    (5, 'i_am_super', false),
+    (5, 'MaryOnAir90', false);
 
 -- Обновляем последовательность
 SELECT setval('game_sessions_id_seq', (SELECT MAX(id) FROM game_sessions));
