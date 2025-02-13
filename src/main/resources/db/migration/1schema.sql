@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS game_sessions (
     play_date DATE NOT NULL
 );
 
-CREATE TABLE game_session_players (
+CREATE TABLE IF NOT EXISTS game_session_players (
     session_id INTEGER REFERENCES game_sessions(id) DEFERRABLE INITIALLY DEFERRED,
     player_username VARCHAR(32) REFERENCES app_users(telegram_username) DEFERRABLE INITIALLY DEFERRED,
     is_winner BOOLEAN NOT NULL,
