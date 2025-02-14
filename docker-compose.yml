@@ -13,7 +13,7 @@ services:
       - /etc/letsencrypt:/etc/letsencrypt:ro
       - nginx_cache:/var/cache/nginx
     depends_on:
-      - backend
+      - board-games-backend
     restart: unless-stopped
     networks:
       - app-network
@@ -23,7 +23,7 @@ services:
           cpus: '0.2'
           memory: 50M
 
-  backend:
+  board-games-backend:
     build: .
     container_name: board-games-backend
     expose:
