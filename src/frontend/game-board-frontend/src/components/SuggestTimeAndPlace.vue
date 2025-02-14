@@ -36,7 +36,7 @@
         <label>Дата:</label>
         <input 
           type="date" 
-          v-model="date"
+          v-model="selectedDate"
           :min="minDate"
           required
         />
@@ -46,7 +46,7 @@
         <label>Время:</label>
         <input 
           type="time" 
-          v-model="time"
+          v-model="selectedTime"
           required
         />
       </div>
@@ -73,15 +73,15 @@
 import axios from 'axios'
 
 export default {
+  name: 'SuggestTimeAndPlace',
   data() {
     return {
       games: [],
       selectedGameId: '',
-      date: '',
-      time: '',
+      selectedDate: '',
+      selectedTime: '',
       location: '',
-      minDate: new Date().toISOString().split('T')[0],
-      timezoneOffset: new Date().getTimezoneOffset()
+      minDate: new Date().toISOString().split('T')[0]
     }
   },
 
@@ -103,21 +103,21 @@ export default {
 
   methods: {
     async suggest() {
-      if (!this.selectedGameId || !this.date || !this.time || !this.location) {
+      if (!this.selectedGameId || !this.selectedDate || !this.selectedTime || !this.location) {
         alert('Пожалуйста, заполните все поля')
         return
       }
 
-      const localDateTime = new Date(`${this.date}T${this.time}`)
-      
       try {
+        // Создаем дату в Ташкентском времени
+        const dateTime = new Date(`${this.selectedDate}T${this.selectedTime}`)
+
         await axios.post('/api/sessions', {
           gameId: this.selectedGameId,
-          dateTime: localDateTime.toISOString(),
-          location: this.location,
-          timezoneOffset: this.timezoneOffset
+          dateTime: dateTime.toISOString(), // Отправляем как есть, без учета таймзоны
+          location: this.location
         })
-        
+
         alert('Предложение успешно отправлено!')
         this.$emit('back')
       } catch (error) {

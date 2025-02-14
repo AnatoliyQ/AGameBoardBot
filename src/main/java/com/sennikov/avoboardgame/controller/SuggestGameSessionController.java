@@ -28,7 +28,6 @@ public class SuggestGameSessionController {
     private final SuggestGameSessionService sessionService;
     private final BoardGameService gameService;
 
-
     @PostMapping("")
     public ResponseEntity<SuggestGameSession> createSession(@Valid @RequestBody SuggestSessionRequest request) {
         try {
@@ -37,15 +36,12 @@ public class SuggestGameSessionController {
 
             BoardGame game = convertToEntity(gameDto);
             
-            // Преобразуем строку ISO в LocalDateTime
-            LocalDateTime userDateTime = LocalDateTime.parse(request.getDateTime());
-            
-            // Конвертируем время пользователя в серверное время
-            LocalDateTime serverDateTime = userDateTime.plusMinutes(request.getTimezoneOffset());
+            // Преобразуем строку ISO в LocalDateTime (время уже в Ташкенте)
+            LocalDateTime dateTime = LocalDateTime.parse(request.getDateTime());
 
             SuggestGameSession session = sessionService.createSession(
                     game,
-                    serverDateTime,
+                    dateTime,
                     request.getLocation(),
                     "-4692104992"
             );
@@ -59,7 +55,6 @@ public class SuggestGameSessionController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
 
     private BoardGame convertToEntity(BoardGameDto dto) {
         BoardGame game = new BoardGame();
