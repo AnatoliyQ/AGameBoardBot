@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/api/sessions")
@@ -36,8 +37,9 @@ public class SuggestGameSessionController {
 
             BoardGame game = convertToEntity(gameDto);
             
-            // Преобразуем строку ISO в LocalDateTime (время уже в Ташкенте)
-            LocalDateTime dateTime = LocalDateTime.parse(request.getDateTime());
+            // Парсим локальное время Ташкента
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(request.getDateTime(), formatter);
 
             SuggestGameSession session = sessionService.createSession(
                     game,

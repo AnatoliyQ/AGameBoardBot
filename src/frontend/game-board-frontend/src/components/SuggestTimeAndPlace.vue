@@ -109,12 +109,12 @@ export default {
       }
 
       try {
-        // Создаем дату в Ташкентском времени
-        const dateTime = new Date(`${this.selectedDate}T${this.selectedTime}`)
+        // Форматируем дату в простом формате YYYY-MM-DDTHH:mm
+        const dateTime = `${this.selectedDate}T${this.selectedTime}`
 
         await axios.post('/api/sessions', {
           gameId: this.selectedGameId,
-          dateTime: dateTime.toISOString(), // Отправляем как есть, без учета таймзоны
+          dateTime: dateTime,
           location: this.location
         })
 

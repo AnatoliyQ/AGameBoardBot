@@ -26,7 +26,7 @@ public class SuggestGameSessionService {
         try {
             SuggestGameSession session = new SuggestGameSession();
             session.setGame(game);
-            session.setSessionDateTime(dateTime.minusHours(5));
+            session.setSessionDateTime(dateTime);
             session.setLocation(location);
             session.setChatId(chatId);
 
