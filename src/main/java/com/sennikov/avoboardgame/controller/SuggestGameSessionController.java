@@ -45,7 +45,7 @@ public class SuggestGameSessionController {
                     game,
                     dateTime,
                     request.getLocation(),
-                    "-4692104992"
+                    "-2392968612"
             );
 
             return ResponseEntity.ok(session);

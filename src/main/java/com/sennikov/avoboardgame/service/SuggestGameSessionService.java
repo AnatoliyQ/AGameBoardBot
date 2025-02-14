@@ -54,6 +54,6 @@ public class SuggestGameSessionService {
         return String.format("🎲 %s\n📅 %s\n📍 %s",
                 game.getName(),
                 dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")),
-                location);
+                location.toUpperCase());
     }
 }
