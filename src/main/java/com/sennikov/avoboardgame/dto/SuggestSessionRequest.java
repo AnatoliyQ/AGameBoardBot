@@ -23,6 +23,4 @@ public class SuggestSessionRequest {
 
     @NotBlank(message = "chatId не может быть пустым")
     private String chatId;
-
-    private Integer timezoneOffset; // Смещение в минутах
-} 
+}
