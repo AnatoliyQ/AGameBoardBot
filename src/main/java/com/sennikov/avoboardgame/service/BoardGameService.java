@@ -2,6 +2,7 @@ package com.sennikov.avoboardgame.service;
 
 import com.sennikov.avoboardgame.dto.BoardGameDto;
 import com.sennikov.avoboardgame.dto.BoardGameRequest;
+import com.sennikov.avoboardgame.dto.BoardGameListDto;
 import com.sennikov.avoboardgame.mapper.BoardGameMapper;
 import com.sennikov.avoboardgame.model.BoardGame;
 import com.sennikov.avoboardgame.repository.BoardGameRepository;
@@ -24,11 +25,9 @@ public class BoardGameService {
     private final BoardGameMapper gameMapper;
 
     @Transactional(readOnly = true)
-    public List<BoardGameDto> getAllGames() {
-        log.debug("Getting all games");
-        return gameRepository.findAllByOrderByIdDesc().stream()
-                .map(gameMapper::toDto)
-                .collect(Collectors.toList());
+    public List<BoardGameListDto> getAllGames() {
+        log.debug("Getting all games (list view)");
+        return gameRepository.findAllForList();
     }
 
     public BoardGameDto saveGame(BoardGameRequest request) {
@@ -40,8 +39,8 @@ public class BoardGameService {
 
     @Transactional(readOnly = true)
     public Optional<BoardGameDto> getGameById(Long id) {
-        log.debug("Getting game by id: {}", id);
-        return gameRepository.findById(id)
+        log.debug("Getting game details by id: {}", id);
+        return gameRepository.findGameDetails(id)
                 .map(gameMapper::toDto);
     }
 

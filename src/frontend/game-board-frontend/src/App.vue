@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <header>
-      <h1>GAME BOARD BOT</h1>
+      <h1>GAME BOARD</h1>
       <img
         v-if="!showGamesList && !showSuggestForm && !showGameDetails && !showAddPlayer && !showAddSession && !showStatistics" 
         src="@/assets/logo.svg"

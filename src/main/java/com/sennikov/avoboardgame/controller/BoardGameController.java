@@ -2,6 +2,7 @@ package com.sennikov.avoboardgame.controller;
 
 import com.sennikov.avoboardgame.dto.BoardGameDto;
 import com.sennikov.avoboardgame.dto.BoardGameRequest;
+import com.sennikov.avoboardgame.dto.BoardGameListDto;
 import com.sennikov.avoboardgame.service.BoardGameService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -26,14 +27,14 @@ public class BoardGameController {
     private final BoardGameService gameService;
 
     @GetMapping
-    public ResponseEntity<List<BoardGameDto>> getAllGames() {
-        log.info("Getting all games");
+    public ResponseEntity<List<BoardGameListDto>> getAllGames() {
+        log.info("Getting all games (list view)");
         return ResponseEntity.ok(gameService.getAllGames());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BoardGameDto> getGameById(@PathVariable Long id) {
-        log.info("Getting game by id: {}", id);
+        log.info("Getting game details by id: {}", id);
         return gameService.getGameById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

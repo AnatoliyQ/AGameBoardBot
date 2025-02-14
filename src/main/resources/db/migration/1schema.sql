@@ -50,3 +50,14 @@ ON game_sessions(game_id);
 
 CREATE INDEX IF NOT EXISTS idx_board_games_owner 
 ON board_games(owner);
+
+-- Добавляем индексы для оптимизации запросов
+CREATE INDEX IF NOT EXISTS idx_board_games_type_name 
+    ON board_games(type, name);
+
+CREATE INDEX IF NOT EXISTS idx_board_games_owner_name 
+    ON board_games(owner, name);
+
+-- Индекс для сортировки по id desc
+CREATE INDEX IF NOT EXISTS idx_board_games_id_desc 
+    ON board_games(id DESC);

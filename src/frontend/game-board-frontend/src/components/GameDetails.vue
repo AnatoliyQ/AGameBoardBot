@@ -10,7 +10,12 @@
       </div>
 
       <div v-else-if="game" class="game-content">
-        <img v-if="game.imageUrl" :src="game.imageUrl" :alt="game.name" class="game-image">
+        <img 
+          v-if="game.imageUrl" 
+          :src="game.imageUrl" 
+          :alt="game.name" 
+          class="game-image"
+        />
         <h2>{{ game.name }}</h2>
         <p class="description">{{ game.description }}</p>
 
@@ -47,8 +52,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'GameDetails',
 
@@ -67,30 +70,40 @@ export default {
     }
   },
 
-  async created() {
-    try {
-      const gameResponse = await axios.get(`/api/games/${this.gameId}`)
-      this.game = gameResponse.data
-
-      const ownerResponse = await axios.get(`/api/users/${this.game.owner}`)
-      this.owner = ownerResponse.data
-    } catch (err) {
-      console.error('Failed to load game details:', err)
-    } finally {
-      this.loading = false
+  computed: {
+    ownerFullName() {
+      return this.owner ? `${this.owner.firstName} ${this.owner.lastName}` : this.game?.owner
     }
   },
 
-  computed: {
-    ownerFullName() {
-      return this.owner 
-        ? `${this.owner.firstName} ${this.owner.lastName}`
-        : this.game?.owner
-    }
+  async created() {
+    await this.loadGameDetails()
   },
 
   methods: {
-    // Удаляем метод backToList, так как используем прямой emit
+    async loadGameDetails() {
+      this.loading = true
+      try {
+        const response = await this.$axios.get(`/api/games/${this.$route.params.id}`)
+        this.game = response.data
+        await this.loadOwnerDetails()
+      } catch (error) {
+        console.error('Error loading game details:', error)
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async loadOwnerDetails() {
+      if (!this.game?.owner) return
+      
+      try {
+        const response = await this.$axios.get(`/api/users/${this.game.owner}`)
+        this.owner = response.data
+      } catch (error) {
+        console.error('Error loading owner details:', error)
+      }
+    }
   }
 }
 </script>

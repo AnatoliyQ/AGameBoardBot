@@ -19,6 +19,12 @@
         class="game-card"
         @click="$emit('select-game', game.id)"
       >
+        <img 
+          v-if="game.imageUrl" 
+          :src="game.imageUrl" 
+          :alt="game.name"
+          class="game-image"
+        />
         <div class="game-name">{{ game.name }}</div>
         <div class="game-info">
           <div class="info-item">
@@ -308,5 +314,13 @@ h2 {
 .owner-link:hover {
   text-decoration: underline;
   opacity: 0.8;
+}
+
+.game-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 16px;
 }
 </style>

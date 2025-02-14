@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
+
 @RestController
 @RequestMapping("/api/sessions")
 @Slf4j
@@ -34,10 +36,16 @@ public class SuggestGameSessionController {
                     .orElseThrow(() -> new EntityNotFoundException("Игра не найдена с ID: " + request.getGameId()));
 
             BoardGame game = convertToEntity(gameDto);
+            
+            // Преобразуем строку ISO в LocalDateTime
+            LocalDateTime userDateTime = LocalDateTime.parse(request.getDateTime());
+            
+            // Конвертируем время пользователя в серверное время
+            LocalDateTime serverDateTime = userDateTime.plusMinutes(request.getTimezoneOffset());
 
             SuggestGameSession session = sessionService.createSession(
                     game,
-                    request.getDateTime(),
+                    serverDateTime,
                     request.getLocation(),
                     "-4692104992"
             );

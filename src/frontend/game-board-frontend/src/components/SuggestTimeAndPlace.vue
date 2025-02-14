@@ -80,7 +80,8 @@ export default {
       date: '',
       time: '',
       location: '',
-      minDate: new Date().toISOString().split('T')[0]
+      minDate: new Date().toISOString().split('T')[0],
+      timezoneOffset: new Date().getTimezoneOffset()
     }
   },
 
@@ -107,13 +108,14 @@ export default {
         return
       }
 
-      const dateTime = new Date(`${this.date}T${this.time}`)
+      const localDateTime = new Date(`${this.date}T${this.time}`)
       
       try {
         await axios.post('/api/sessions', {
           gameId: this.selectedGameId,
-          dateTime: dateTime.toISOString(),
-          location: this.location
+          dateTime: localDateTime.toISOString(),
+          location: this.location,
+          timezoneOffset: this.timezoneOffset
         })
         
         alert('Предложение успешно отправлено!')

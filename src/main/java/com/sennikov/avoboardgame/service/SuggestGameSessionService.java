@@ -21,6 +21,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SuggestGameSessionService {
     private final BoardGamesBot bot;
+    private final Integer timezoneOffset;
 
     public SuggestGameSession createSession(BoardGame game, LocalDateTime dateTime, String location, String chatId) {
         try {
@@ -50,10 +51,13 @@ public class SuggestGameSessionService {
         return poll;
     }
 
-    private String formatPollQuestion(BoardGame game, LocalDateTime dateTime, String location) {
+    private String formatPollQuestion(BoardGame game, LocalDateTime serverDateTime, String location) {
+        // Конвертируем серверное время обратно в пользовательское для отображения
+        LocalDateTime userDateTime = serverDateTime.minusMinutes(timezoneOffset);
+        
         return String.format("🎲 %s\n📅 %s\n📍 %s",
                 game.getName(),
-                dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")),
+                userDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")),
                 location);
     }
 }
