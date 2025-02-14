@@ -21,7 +21,6 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SuggestGameSessionService {
     private final BoardGamesBot bot;
-    private final Integer timezoneOffset;
 
     public SuggestGameSession createSession(BoardGame game, LocalDateTime dateTime, String location, String chatId) {
         try {
@@ -35,7 +34,7 @@ public class SuggestGameSessionService {
             Message message = bot.execute(poll);
             session.setPollMessageId(message.getMessageId().toString());
 
-            return  session;
+            return session;
         } catch (TelegramApiException e) {
             log.error("Error creating game session", e);
             throw new RuntimeException("Failed to create game session", e);
@@ -51,13 +50,10 @@ public class SuggestGameSessionService {
         return poll;
     }
 
-    private String formatPollQuestion(BoardGame game, LocalDateTime serverDateTime, String location) {
-        // Конвертируем серверное время обратно в пользовательское для отображения
-        LocalDateTime userDateTime = serverDateTime.minusMinutes(timezoneOffset);
-        
+    private String formatPollQuestion(BoardGame game, LocalDateTime dateTime, String location) {
         return String.format("🎲 %s\n📅 %s\n📍 %s",
                 game.getName(),
-                userDateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")),
+                dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")),
                 location);
     }
 }
