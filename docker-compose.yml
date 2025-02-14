@@ -11,7 +11,6 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - /root/nginx/ssl:/etc/ssl/certs
       - /etc/letsencrypt:/etc/letsencrypt:ro
-      - ./src/frontend/game-board-frontend/dist:/usr/share/nginx/html
       - nginx_cache:/var/cache/nginx
     depends_on:
       - backend
