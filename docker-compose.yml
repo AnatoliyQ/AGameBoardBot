@@ -11,9 +11,10 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d
       - /root/nginx/ssl:/etc/ssl/certs
       - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./src/frontend/game-board-frontend/dist:/usr/share/nginx/html
       - nginx_cache:/var/cache/nginx
     depends_on:
-      - board-games-backend
+      - backend
     restart: unless-stopped
     networks:
       - app-network
@@ -23,7 +24,7 @@ services:
           cpus: '0.2'
           memory: 50M
 
-  board-games-backend:
+  backend:
     build: .
     container_name: board-games-backend
     expose:
