@@ -17,7 +17,7 @@
         v-for="game in gamesList" 
         :key="game.id" 
         class="game-card"
-        @click="$emit('select-game', game.id)"
+        @click="selectGame(game.id)"
       >
         <img 
           v-if="game.imageUrl" 
@@ -146,6 +146,10 @@ export default {
       return userData.firstName && userData.lastName 
         ? `${userData.firstName} ${userData.lastName}`.trim()
         : userData.username
+    },
+
+    selectGame(id) {
+      this.$emit('select-game', Number(id))
     }
   }
 }

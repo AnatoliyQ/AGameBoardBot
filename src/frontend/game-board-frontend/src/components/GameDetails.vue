@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'GameDetails',
 
@@ -84,7 +86,7 @@ export default {
     async loadGameDetails() {
       this.loading = true
       try {
-        const response = await this.$axios.get(`/api/games/${this.$route.params.id}`)
+        const response = await axios.get(`/api/games/${this.gameId}`)
         this.game = response.data
         await this.loadOwnerDetails()
       } catch (error) {
@@ -98,10 +100,19 @@ export default {
       if (!this.game?.owner) return
       
       try {
-        const response = await this.$axios.get(`/api/users/${this.game.owner}`)
+        const response = await axios.get(`/api/users/${this.game.owner}`)
         this.owner = response.data
       } catch (error) {
         console.error('Error loading owner details:', error)
+      }
+    }
+  },
+
+  watch: {
+    gameId: {
+      immediate: true,
+      handler() {
+        this.loadGameDetails()
       }
     }
   }
